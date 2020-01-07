@@ -200,7 +200,7 @@ typedef struct UIState {
   int font_sans_bold;
   int img_wheel;
   int img_turn;
-  int img_face;
+  #int img_face;
   int img_map;
 
   // Sockets
@@ -552,8 +552,8 @@ static void ui_init(UIState *s) {
   assert(s->img_turn >= 0);
   s->img_turn = nvgCreateImage(s->vg, "../assets/img_trafficSign_turn.png", 1);
 
-  assert(s->img_face >= 0);
-  s->img_face = nvgCreateImage(s->vg, "../assets/img_driver_face.png", 1);
+  #assert(s->img_face >= 0);
+  #s->img_face = nvgCreateImage(s->vg, "../assets/img_driver_face.png", 1);
 
   assert(s->img_map >= 0);
   s->img_map = nvgCreateImage(s->vg, "../assets/img_map.png", 1);
@@ -1351,7 +1351,7 @@ static void ui_draw_vision_map(UIState *s) {
   nvgFill(s->vg);
 }
 
-static void ui_draw_vision_face(UIState *s) {
+/* static void ui_draw_vision_face(UIState *s) {
   const UIScene *scene = &s->scene;
   const int face_size = 96;
   const int face_x = (scene->ui_viz_rx + face_size + (bdr_s * 2));
@@ -1374,7 +1374,7 @@ static void ui_draw_vision_face(UIState *s) {
   nvgRect(s->vg, face_img_x, face_img_y, face_img_size, face_img_size);
   nvgFillPaint(s->vg, face_img);
   nvgFill(s->vg);
-}
+} */
 
 static void ui_draw_vision_header(UIState *s) {
   const UIScene *scene = &s->scene;
