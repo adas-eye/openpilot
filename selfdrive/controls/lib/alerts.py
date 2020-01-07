@@ -256,10 +256,10 @@ ALERTS = [
 
   Alert(
       "posenetInvalid",
-      "TAKE CONTROL",
+      "CAUTION",
       "Vision Model Output Uncertain",
       AlertStatus.userPrompt, AlertSize.mid,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.chimeWarning1, .4, 2., 3.),
+      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.none, .4, 2., 3.),
 
   # Non-entry only alerts
   Alert(
