@@ -144,25 +144,7 @@ class DriverStatus():
       self.active_monitoring_mode = False
 
   def _is_driver_distracted(self, pose, blink):
-    if not self.pose_calibrated:
-      pitch_error = pose.pitch - _PITCH_NATURAL_OFFSET
-      yaw_error = pose.yaw - _YAW_NATURAL_OFFSET
-    else:
-      pitch_error = pose.pitch - self.pose.pitch_offseter.filtered_stat.mean()
-      yaw_error = pose.yaw - self.pose.yaw_offseter.filtered_stat.mean()
-
-    # positive pitch allowance
-    if pitch_error > 0.:
-      pitch_error = max(pitch_error - _PITCH_POS_ALLOWANCE, 0.)
-    pitch_error *= _PITCH_WEIGHT
-    pose_metric = sqrt(yaw_error**2 + pitch_error**2)
-
-    if pose_metric > _METRIC_THRESHOLD*pose.cfactor:
-      return DistractedType.BAD_POSE
-    elif (blink.left_blink + blink.right_blink)*0.5 > _BLINK_THRESHOLD*blink.cfactor:
-      return DistractedType.BAD_BLINK
-    else:
-      return DistractedType.NOT_DISTRACTED
+    return DistractedType.NOT_DISTRACTED
 
   def set_policy(self, model_data):
     ep = min(model_data.meta.engagedProb, 0.8) / 0.8
@@ -216,7 +198,7 @@ class DriverStatus():
       self.awareness_passive = 1.
       return events
 
-    driver_attentive = self.driver_distraction_filter.x < 0.37
+    driver_attentive = True
     awareness_prev = self.awareness
 
     if self.face_detected and self.hi_stds * DT_DMON > _HI_STD_TIMEOUT:
@@ -235,22 +217,5 @@ class DriverStatus():
     if (not (self.face_detected and self.hi_stds * DT_DMON <= _HI_STD_FALLBACK_TIME) or (self.driver_distraction_filter.x > 0.63 and self.driver_distracted and self.face_detected)) and \
        not (standstill and self.awareness - self.step_change <= self.threshold_prompt):
       self.awareness = max(self.awareness - self.step_change, -0.1)
-
-    alert = None
-    if self.awareness <= 0.:
-      # terminal red alert: disengagement required
-      alert = 'driverDistracted' if self.active_monitoring_mode else 'driverUnresponsive'
-      self.terminal_time += 1
-      if awareness_prev > 0.:
-        self.terminal_alert_cnt += 1
-    elif self.awareness <= self.threshold_prompt:
-      # prompt orange alert
-      alert = 'promptDriverDistracted' if self.active_monitoring_mode else 'promptDriverUnresponsive'
-    elif self.awareness <= self.threshold_pre:
-      # pre green alert
-      alert = 'preDriverDistracted' if self.active_monitoring_mode else 'preDriverUnresponsive'
-
-    if alert is not None:
-      events.append(create_event(alert, [ET.WARNING]))
 
     return events
