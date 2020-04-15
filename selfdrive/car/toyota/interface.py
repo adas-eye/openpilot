@@ -317,7 +317,7 @@ class CarInterface(CarInterfaceBase):
       events.append(create_event('pcmDisable', [ET.USER_DISABLE]))
 
     ret.events = events
-
+    ret.gasPressed = False
     self.gas_pressed_prev = ret.gasPressed
     self.brake_pressed_prev = ret.brakePressed
     self.cruise_enabled_prev = ret.cruiseState.enabled
