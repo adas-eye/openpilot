@@ -85,7 +85,7 @@ bool controls_allowed = false;
 bool relay_malfunction = false;
 bool gas_interceptor_detected = false;
 int gas_interceptor_prev = 0;
-bool gas_pressed_prev = false;
+bool gas_pressed_prev = true;
 bool brake_pressed_prev = false;
 
 // time since safety mode has been changed
