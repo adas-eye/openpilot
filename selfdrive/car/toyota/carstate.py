@@ -31,14 +31,6 @@ class CarState(CarStateBase):
 
     ret.brakePressed = cp.vl["BRAKE_MODULE"]['BRAKE_PRESSED'] != 0
     ret.brakeLights = bool(cp.vl["ESP_CONTROL"]['BRAKE_LIGHTS_ACC'] or ret.brakePressed)
-
-	#if self.CP.enableGasInterceptor:
-	#  ret.gas = (cp.vl["GAS_SENSOR"]['INTERCEPTOR_GAS'] + cp.vl["GAS_SENSOR"]['INTERCEPTOR_GAS2']) / 2.
-	#  ret.gasPressed = ret.gas > 15
-	#else:
-	#  ret.gas = cp.vl["GAS_PEDAL"]['GAS_PEDAL']
-	#  ret.gasPressed = cp.vl["PCM_CRUISE"]['GAS_RELEASED'] == 0
-	
 	ret.gasPressed = False
 
     ret.wheelSpeeds.fl = cp.vl["WHEEL_SPEEDS"]['WHEEL_SPEED_FL'] * CV.KPH_TO_MS
