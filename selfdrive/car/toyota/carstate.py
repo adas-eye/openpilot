@@ -44,12 +44,12 @@ class CarState(CarStateBase):
 
 		# Some newer models have a more accurate angle measurement in the TORQUE_SENSOR message. Use if non-zero
 		if abs(cp.vl["STEER_TORQUE_SENSOR"]['STEER_ANGLE']) > 1e-3:
-		  self.accurate_steer_angle_seen = True
+			self.accurate_steer_angle_seen = True
 
 		if self.accurate_steer_angle_seen:
-		  ret.steeringAngle = cp.vl["STEER_TORQUE_SENSOR"]['STEER_ANGLE'] - self.angle_offset
+			ret.steeringAngle = cp.vl["STEER_TORQUE_SENSOR"]['STEER_ANGLE'] - self.angle_offset
 
-		  if self.needs_angle_offset:
+		if self.needs_angle_offset:
 			angle_wheel = cp.vl["STEER_ANGLE_SENSOR"]['STEER_ANGLE'] + cp.vl["STEER_ANGLE_SENSOR"]['STEER_FRACTION']
 			if abs(angle_wheel) > 1e-3 and abs(ret.steeringAngle) > 1e-3:
 			  self.needs_angle_offset = False
