@@ -8,7 +8,7 @@ from selfdrive.car.toyota.values import CAR, DBC, STEER_THRESHOLD, TSS2_CAR, NO_
 
 
 class CarState(CarStateBase):
-  def __init__(self, CP):
+	def __init__(self, CP):
     super().__init__(CP)
     can_define = CANDefine(DBC[CP.carFingerprint]['pt'])
     self.shifter_values = can_define.dv["GEAR_PACKET"]['GEAR']
@@ -22,7 +22,7 @@ class CarState(CarStateBase):
     self.needs_angle_offset = CP.carFingerprint not in TSS2_CAR
     self.angle_offset = 0.
 
-  def update(self, cp, cp_cam):
+	def update(self, cp, cp_cam):
     ret = car.CarState.new_message()
 
     ret.doorOpen = any([cp.vl["SEATS_DOORS"]['DOOR_OPEN_FL'], cp.vl["SEATS_DOORS"]['DOOR_OPEN_FR'],
@@ -102,8 +102,8 @@ class CarState(CarStateBase):
 
     return ret
 
-  @staticmethod
-  def get_can_parser(CP):
+	@staticmethod
+	def get_can_parser(CP):
 
     signals = [
       # sig_name, sig_address, default
@@ -171,8 +171,8 @@ class CarState(CarStateBase):
 
     return CANParser(DBC[CP.carFingerprint]['pt'], signals, checks, 0)
 
-  @staticmethod
-  def get_cam_can_parser(CP):
+	@staticmethod
+	def get_cam_can_parser(CP):
 
     signals = [("FORCE", "PRE_COLLISION", 0), ("PRECOLLISION_ACTIVE", "PRE_COLLISION", 0)]
 
