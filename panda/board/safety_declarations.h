@@ -105,7 +105,7 @@ uint32_t ts_last = 0;
 
 // If using this flag, be very careful about what happens if your fork wants to brake while the
 //   user is pressing the gas. Tesla is careful with this.
-#define UNSAFE_DISABLE_DISENGAGE_ON_GAS 1
+define UNSAFE_DISABLE_DISENGAGE_ON_GAS 1
 
 // If using this flag, make sure to communicate to your users that a stock safety feature is now disabled.
 #define UNSAFE_DISABLE_STOCK_AEB 2
@@ -115,7 +115,7 @@ uint32_t ts_last = 0;
 // See ISO 15622:2018 for more information.
 #define UNSAFE_RAISE_LONGITUDINAL_LIMITS_TO_ISO_MAX 8
 
-int unsafe_mode = 0;
+int unsafe_mode = 1;
 
 // time since safety mode has been changed
 uint32_t safety_mode_cnt = 0U;
