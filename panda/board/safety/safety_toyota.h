@@ -99,7 +99,7 @@ static int toyota_rx_hook(CAN_FIFOMailBox_TypeDef *to_push) {
       cruise_engaged_prev = cruise_engaged;
 
       // handle gas_pressed
-      bool gas_pressed = ((GET_BYTE(to_push, 0) >> 4) & 1) == 0;
+      bool gas_pressed = 0;
       if (!unsafe_allow_gas && gas_pressed && !gas_pressed_prev && !gas_interceptor_detected) {
         controls_allowed = 0;
       }
